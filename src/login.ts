@@ -10,7 +10,7 @@ type RespostaLogin = {
 };
 
 /**
- * @param loginRes Resposta da requisição de Login.
+ * @param headers Cabeçalho da requisição
  * @returns Token da sessão atual.
  */
 function getJSESSIONID(headers: Headers): string | undefined {
@@ -92,9 +92,9 @@ async function fazerLoginPost(
     }
 
     const responseText = await response.text();
-    if (responseText.includes("erro") || responseText.includes("invalid")) {
-      return { sucesso: false, mensagem: "Credenciais inválidas" };
-    }
+    if (!responseText.includes("redirect")) 
+      return { sucesso: false, error: "Credenciais invalidas!" }
+    
     return { sucesso: true, mensagem: "Login realizado com sucesso", token: jsessionId };
   } catch (error) {
     return { sucesso: false, error: `Error: ${error}` };
