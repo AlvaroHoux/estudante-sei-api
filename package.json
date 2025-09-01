@@ -1,0 +1,56 @@
+{
+  "name": "estudante-sei-api",
+  "version": "1.0.0",
+  "description": "A non-official API to interact with UniRV's SEI system, focused on student functionalities.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "sei",
+    "unirv",
+    "api",
+    "web-scraping",
+    "student",
+    "student portal"
+  ],
+  "author": {
+    "name": "Alvaro Houx",
+    "email": "alvarohoux@gmail.com",
+    "url": "https://github.com/AlvaroHoux"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlvaroHoux/estudante-sei-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlvaroHoux/estudante-sei-api/issues"
+  },
+  "homepage": "https://github.com/AlvaroHoux/estudante-sei-api#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.3.0",
+    "jest": "^30.0.5",
+    "ts-jest": "^29.4.1",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "css-select": "^6.0.0",
+    "dotenv": "^17.2.1",
+    "htmlparser2": "^10.0.0"
+  }
+}

@@ -1,0 +1,97 @@
+# ######################## #
+# Arquivos e Pastas Node.js #
+# ######################## #
+
+# Módulos e dependências
+# A pasta node_modules contém todos os pacotes de terceiros.
+# Ela é recriada com o comando `npm install` ou `yarn install`.
+/node_modules
+
+# Arquivos de log do NPM
+# Gerados em caso de erros durante a instalação de pacotes.
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Arquivo de lock para versões mais antigas do npm.
+# O package-lock.json (ou yarn.lock) deve ser versionado.
+# shrinkwrap.yaml
+
+# Opcional: Arquivos de cache do gerenciador de pacotes
+.npm
+.pnp.*
+
+
+# ############################ #
+# Arquivos de Build TypeScript #
+# ############################ #
+
+# Pasta de saída do compilador TypeScript (geralmente `dist` ou `build`).
+# Contém o código JavaScript transpilado que será executado.
+/dist
+/build
+/out
+
+# Arquivos de cache do TypeScript
+*.tsbuildinfo
+
+
+# ############################ #
+# Logs e Arquivos de Depuração #
+# ############################ #
+
+# Arquivos de log genéricos
+logs
+*.log
+*.log.*
+*.logs
+
+# Arquivos gerados por ferramentas de depuração e monitoramento
+.yarn/trace
+.next
+
+
+# ######################## #
+# Variáveis de Ambiente    #
+# ######################## #
+
+# Nunca versione arquivos com senhas, chaves de API ou segredos.
+# Crie um arquivo .env.example com as variáveis necessárias (sem os valores).
+.env
+.env.*
+!.env.example
+!.env.test
+!.env.development
+!.env.production
+
+
+# ########################## #
+# Arquivos de IDEs e Editores #
+# ########################## #
+
+# Visual Studio Code
+.vscode
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
+
+# #################### #
+# Cobertura de Testes  #
+# #################### #
+
+# Arquivos e pastas gerados por ferramentas de teste como Jest ou Mocha.
+/coverage
+.nyc_output
+
+
+# #################### #
+#       Outros         #
+# #################### #
+
+# Arquivos de build de produção/desenvolvimento
+.production
+.development
