@@ -1,4 +1,4 @@
-import { fetchConfig } from "./seiApiConfig";
+import { fetchConfig } from "./seiApiConfig.js";
 import { parseDocument } from "htmlparser2";
 import { selectAll, selectOne } from "css-select";
 import { Node, Element, Text } from "domhandler";
