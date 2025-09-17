@@ -1,19 +1,28 @@
 {
   "name": "estudante-sei-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A non-official API to interact with UniRV's SEI system, focused on student functionalities.",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "exports": {
+    "./login": {
+      "import": "./dist/login.js",
+      "types": "./dist/login.d.ts"
+    },
+    "./materiais": {
+      "import": "./dist/materiais.js",
+      "types": "./dist/materiais.d.ts"
+    }
+  },
   "scripts": {
-    "build": "tsc",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
     "dev": "tsc -w",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.ts",
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch --config jest.config.ts",
+    "test:cov": "NODE_OPTIONS=--experimental-vm-modules jest --coverage --config jest.config.ts",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -42,15 +51,17 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.3.0",
-    "jest": "^30.0.5",
-    "ts-jest": "^29.4.1",
-    "typescript": "^5.9.2"
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.2",
+    "jest": "^29.7.0",
+    "rimraf": "^5.0.10",
+    "ts-jest": "^29.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "css-select": "^6.0.0",
-    "dotenv": "^17.2.1",
-    "htmlparser2": "^10.0.0"
+    "css-select": "^5.1.0",
+    "dotenv": "^16.4.5",
+    "htmlparser2": "^9.1.0"
   }
 }
