@@ -1,6 +1,6 @@
 {
   "name": "estudante-sei-api",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A non-official API to interact with UniRV's SEI system, focused on student functionalities.",
   "type": "module",
   "files": [
@@ -11,9 +11,9 @@
       "import": "./dist/login.js",
       "types": "./dist/login.d.ts"
     },
-    "./materiais": {
-      "import": "./dist/materiais.js",
-      "types": "./dist/materiais.d.ts"
+    "./materias": {
+      "import": "./dist/materias.js",
+      "types": "./dist/materias.d.ts"
     }
   },
   "scripts": {
