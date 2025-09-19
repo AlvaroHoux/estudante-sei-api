@@ -1,18 +1,6 @@
 import { MateriasPeriodoAtual } from "../dist/materias";
 import { getCronograma } from "../dist/cronograma";
-import { Login } from "../dist/login";
-import { exitCode } from "process";
-
-
-async function tryLogin() {
-  const username = process.env.APP_USERNAME;
-  const password = process.env.APP_PASSWORD;
-
-  if (!username || !password)
-    throw new Error("As variáveis de ambiente APP_USERNAME e APP_PASSWORD devem ser definidas para este teste.");
-
-  return await Login(username, password);
-}
+import { tryLogin } from "./login.test";
 
 describe("materias", () => {
   it("deve conseguir as materias do usuário", async () => {
@@ -35,7 +23,7 @@ describe("materias", () => {
 describe("cronograma", () => {
   it("deve conseguir o cronograma do usuário", async () => {
     const res = await tryLogin();
-    
+
     if (res.sucesso && res.token) {
       const cronograma = await getCronograma(res.token);
       expect(cronograma).toBeDefined();
