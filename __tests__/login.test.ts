@@ -25,3 +25,13 @@ describe("login", () => {
     expect(res.error).toMatch(/invalida/i);
   }, 30000);
 });
+
+export async function tryLogin() {
+  const username = process.env.APP_USERNAME;
+  const password = process.env.APP_PASSWORD;
+
+  if (!username || !password)
+    throw new Error("As variáveis de ambiente APP_USERNAME e APP_PASSWORD devem ser definidas para este teste.");
+
+  return await Login(username, password);
+}
