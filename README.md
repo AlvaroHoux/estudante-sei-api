@@ -9,97 +9,63 @@
   <a href="https://github.com/AlvaroHoux/estudante-sei-api/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/AlvaroHoux/estudante-sei-api?style=for-the-badge" alt="license" />
   </a>
-   <img src="https://img.shields.io/github/languages/top/AlvaroHoux/estudante-sei-api?style=for-the-badge&logo=typescript" alt="primary language" />
+  <img src="https://img.shields.io/github/languages/top/AlvaroHoux/estudante-sei-api?style=for-the-badge&logo=typescript" alt="primary language" />
 </p>
 
----
+-----
 
 > **Estudante SEI API** provides a simple and type-safe way to programmatically log in and retrieve academic information from the UniRV (Universidade de Rio Verde) student portal, such as subjects, grades, and more.
 
----
-
-## 📚 Table of Contents
-
-- [✨ Features](#-features)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [📋 Prerequisites](#-prerequisites)
-- [🚀 Getting Started](#-getting-started)
-- [💡 How to Use](#-how-to-use)
-- [👨‍💻 Running the Tests](#-running-the-tests)
-- [📖 API Reference](#-api-reference)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-
----
+-----
 
 ## ✨ Features
 
--   🔐 **Secure Login**: Authenticate with your student credentials to get a session token.
--   📚 **Fetch Subjects**: Get a detailed, parsed list of your subjects for the current academic period.
--   🛡️ **Type-Safe**: Written entirely in TypeScript for a better and safer developer experience.
--   🌐 **Robust Scraping**: Uses modern tools to reliably parse HTML content.
+  - 🔐 **Secure Login**: Authenticate with your student credentials to get a session token.
+  - 📚 **Fetch Subjects**: Get a detailed, parsed list of your subjects for the current academic period.
+  - 🗓️ **Get Schedule**: Retrieve your class schedule.
+  - 💯 **Fetch Grades**: Access your grades for each subject.
+  - 🛡️ **Type-Safe**: Written entirely in TypeScript for a better and safer developer experience.
+  - 🌐 **Robust Scraping**: Uses modern tools to reliably parse HTML content.
 
----
-
-## 🛠️ Tech Stack
-
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![Node.JS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
-![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
-
----
-
-## 📋 Prerequisites
-
--   [Node.js](https://nodejs.org/) - `v18.x` or higher
--   [Yarn](https://yarnpkg.com/) (recommended) or `npm`
-
----
+-----
 
 ## 🚀 Getting Started
 
-To get a local copy up and running, follow these simple steps.
+To install and use the estudante-sei-api library in your project, run the following command:
 
-1.  Clone the repository:
-    ```sh
-    git clone https://github.com/AlvaroHoux/estudante-sei-api.git
-    ```
-2.  Navigate to the project directory:
-    ```sh
-    cd estudante-sei-api
-    ```
-3.  Install dependencies:
-    ```sh
-    yarn install
-    ```
-    or
-    ```sh
-    npm install
-    ```
+```sh
+npm install estudante-sei-api
+```
 
----
+That's it! Now you can import the functions into your project as shown in the usage example below.
+
+-----
 
 ## 💡 How to Use
 
-Here's a quick example of how to use the library within the project.
+Here's a quick example of how to use the library within your project.
 
 ```typescript
-// Adjust the import path based on your project structure
-import { Login, MateriasPeriodoAtual } from './src/index'; 
+import { Login, getCronograma, getNotas, MateriasPeriodoAtual } from 'estudante-sei-api';
 
-async function getMySubjects() {
+async function main() {
   try {
     // 1. Authenticate to get the session token
     const loginResponse = await Login('YOUR_USERNAME', 'YOUR_PASSWORD');
 
     if (loginResponse.sucesso && loginResponse.token) {
       console.log('✅ Login successful!');
+      const token = loginResponse.token;
 
-      // 2. Use the token to fetch the subjects
-      const subjects = await MateriasPeriodoAtual(loginResponse.token);
+      // 2. Use the token to fetch information
+      const subjects = await MateriasPeriodoAtual(token);
+      console.log('📚 Current Subjects:', subjects);
 
-      console.log('📚 Current Subjects:');
-      console.log(subjects);
+      const schedule = await getCronograma(token);
+      console.log('🗓️ Schedule:', schedule);
+
+      const grades = await getNotas(token);
+      console.log('💯 Grades:', grades);
 
     } else {
       console.error('❌ Login failed:', loginResponse.error);
@@ -109,60 +75,100 @@ async function getMySubjects() {
   }
 }
 
-getMySubjects();
+main();
 ```
 
-### Example Output
-```json
-[
-  {
-    "codigo": "12345 - ABC",
-    "nomeDaMateria": "INTRODUCTION TO PROGRAMMING",
-    "professor": [ "John Doe" ],
-    "turmaPratica": "A",
-    "turmaTeorica": "A",
-    "frequencia": 95.5,
-    "periodoEstudoInicio": "01/01/2024",
-    "periodoEstudoFim": "30/06/2024",
-    "status": "In progress"
-  }
-]
-```
-
----
-
-## 👨‍💻 Running the Tests
-
-To run the test suite, you first need to set up your credentials.
-
-1.  Create a `.env` file in the root of the project.
-2.  Add your test credentials to the `.env` file:
-    ```env
-    APP_USERNAME="your-test-username"
-    APP_PASSWORD="your-test-password"
-    ```
-3.  Run the tests using the following command:
-    ```sh
-    yarn test
-    ```
-    or
-    ```sh
-    npm test
-    ```
-
----
+-----
 
 ## 📖 API Reference
 
 ### `Login(username: string, password: string): Promise<RespostaLogin>`
+
 Authenticates the user and returns a `Promise` that resolves to a login response object. On success, this object contains a `token`.
 
+**Response `RespostaLogin`:**
+
+```typescript
+type RespostaLogin = {
+  sucesso: boolean;
+  mensagem?: string;
+  token?: string;
+  error?: string;
+};
+```
+
 ### `MateriasPeriodoAtual(TOKEN: string): Promise<Materia[]>`
-Fetches the subjects for the current academic period using a valid session `TOKEN` (JSESSIONID).
 
-> ⚠️ **Note:** This function will throw an `Error` if the HTTP request fails, the token is invalid, or if there's an issue parsing the page content.
+Fetches the subjects for the current academic period using a valid session `TOKEN`.
 
----
+**Response `Materia`:**
+
+```typescript
+type Materia = {
+  codigo?: string;
+  nomeDaMateria?: string;
+  professor?: string[];
+  periodoEstudoInicio?: string;
+  periodoEstudoFim?: string;
+  turmaPratica?: string;
+  turmaTeorica?: string;
+  frequencia?: number;
+  status?: string;
+};
+```
+
+### `getCronograma(TOKEN: string): Promise<Cronograma>`
+
+Fetches the weekly class schedule using a valid session `TOKEN`.
+
+**Response `Cronograma`:**
+
+```typescript
+type Cronograma = {
+  Segunda: Disciplina[];
+  Terça: Disciplina[];
+  Quarta: Disciplina[];
+  Quinta: Disciplina[];
+  Sexta: Disciplina[];
+  Sábado: Disciplina[];
+};
+
+type Disciplina = {
+  horaInicio?: string;
+  horaFim?: string;
+  codigo?: string;
+  nome?: string;
+  turma?: string;
+  professor?: string;
+  sala?: string;
+};
+```
+
+### `getNotas(TOKEN: string): Promise<DisciplinaNota[]>`
+
+Fetches the grades for all subjects using a valid session `TOKEN`.
+
+**Response `DisciplinaNota`:**
+
+```typescript
+type DisciplinaNota = {
+  frequencia?: string;
+  mediaFinal?: string;
+  situacao?: string;
+  notas?: {
+    av1?: number;
+    av2?: number;
+    av3?: number;
+  };
+  codigo?: string;
+  nome?: string;
+  turma?: string;
+};
+```
+
+> ⚠️ **Note:** All functions that require a `TOKEN` will throw an `Error` if the HTTP request fails, the token is invalid, or if there's an issue parsing the page content.
+
+-----
 
 ## 🤝 Contributing
 
@@ -170,9 +176,9 @@ Contributions are what make the open-source community such an amazing place to l
 
 Please read our **Contributing Guidelines** for details on our code of conduct and the process for submitting pull requests to us.
 
-Don't forget to ⭐ **star this repo** if you found it useful!
+Don't forget to ⭐ **star this repo** if you found it useful\!
 
----
+-----
 
 ## 📄 License
 
