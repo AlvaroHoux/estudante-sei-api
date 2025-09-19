@@ -3,7 +3,7 @@ import { fetchConfig } from "./seiApiConfig.js";
 import { parseDocument } from "htmlparser2";
 import { Document } from "domhandler";
 
-type Disciplina = {
+export type Disciplina = {
   horaInicio?: string;
   horaFim?: string;
   codigo?: string;
