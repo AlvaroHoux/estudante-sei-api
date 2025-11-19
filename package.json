@@ -1,6 +1,6 @@
 {
   "name": "estudante-sei-api",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A non-official API to interact with UniRV's SEI system, focused on student functionalities.",
   "type": "module",
   "files": [
