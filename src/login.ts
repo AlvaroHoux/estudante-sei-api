@@ -6,6 +6,7 @@ type RespostaLogin = {
   sucesso: boolean;
   mensagem?: string;
   token?: string;
+  expira_em?: number;
   error?: string;
 };
 
@@ -95,7 +96,7 @@ async function fazerLoginPost(
     if (!responseText.includes("redirect")) 
       return { sucesso: false, error: "Credenciais invalidas!" }
     
-    return { sucesso: true, mensagem: "Login realizado com sucesso", token: jsessionId };
+    return { sucesso: true, mensagem: "Login realizado com sucesso", token: jsessionId, expira_em: Date.now() + 2400000};
   } catch (error) {
     return { sucesso: false, error: `Error: ${error}` };
   }
